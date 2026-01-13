@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE WHITE WHALE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Impact', 'sans-serif'],
+              mono: ['Courier New', 'Courier', 'monospace'],
+            },
+            colors: {
+              'degen-pink': '#FF00FF',
+              'degen-green': '#00FF00',
+              'degen-yellow': '#FFFF00',
+            },
+            animation: {
+              'spin-slow': 'spin 3s linear infinite',
+              'bounce-fast': 'bounce 0.5s infinite',
+              'marquee-left': 'marquee-left 20s linear infinite',
+              'marquee-right': 'marquee-right 20s linear infinite',
+              'wiggle': 'wiggle 1s ease-in-out infinite',
+            },
+            keyframes: {
+              'marquee-left': {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
+              },
+              'marquee-right': {
+                '0%': { transform: 'translateX(-50%)' },
+                '100%': { transform: 'translateX(0)' },
+              },
+              'wiggle': {
+                '0%, 100%': { transform: 'rotate(-1deg)' },
+                '50%': { transform: 'rotate(1deg)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+      
+      body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000;
+        height: 100%;
+        width: 100%;
+        cursor: none !important; /* Hides default cursor */
+      }
+
+      /* Ensure interactive elements also don't show cursor */
+      a, button, input, select {
+        cursor: none !important;
+      }
+
+      /* Custom Chaos Animations */
+      @keyframes vibe-shake {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        20% { transform: translate(-2px, 3px) rotate(-1deg); }
+        40% { transform: translate(2px, -1px) rotate(2deg); }
+        60% { transform: translate(-3px, 1px) rotate(-2deg); }
+        80% { transform: translate(3px, 3px) rotate(1deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+      }
+
+      @keyframes glitch-flash {
+        0% { filter: invert(0); }
+        2% { filter: invert(1); }
+        4% { filter: invert(0); }
+        100% { filter: invert(0); }
+      }
+
+      @keyframes explode-out {
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(20); opacity: 0; }
+      }
+
+      @keyframes rainbow-chaos {
+        0% { filter: hue-rotate(0deg) saturate(1.5) contrast(1.2); border-color: #FF0000; }
+        20% { filter: hue-rotate(72deg) saturate(3) contrast(1.5); border-color: #FFFF00; }
+        40% { filter: hue-rotate(144deg) saturate(5) contrast(2); border-color: #00FF00; }
+        60% { filter: hue-rotate(216deg) saturate(3) contrast(1.5) invert(1); border-color: #00FFFF; }
+        80% { filter: hue-rotate(288deg) saturate(5) contrast(2); border-color: #0000FF; }
+        100% { filter: hue-rotate(360deg) saturate(1.5) contrast(1.2); border-color: #FF00FF; }
+      }
+
+      @keyframes move-stripes {
+        0% { background-position: 0 0; }
+        100% { background-position: 28.28px 0; }
+      }
+
+      .animate-vibe-shake {
+        animation: vibe-shake 0.3s infinite linear;
+      }
+      
+      .animate-explode {
+        animation: explode-out 0.8s forwards ease-in;
+      }
+
+      .animate-moving-stripes {
+        animation: move-stripes 1s linear infinite;
+        will-change: background-position;
+      }
+
+      .hover-chaos-color:hover {
+        animation: rainbow-chaos 0.3s infinite linear !important;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px #FF00FF;
+        z-index: 50;
+      }
+
+      /* Scrollbar hide */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      
+      .pattern-grid {
+        background-image: radial-gradient(#000 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
