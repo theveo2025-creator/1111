@@ -175,9 +175,9 @@ const App: React.FC = () => {
                 <div className="absolute top-0 right-0 p-1 text-[10px] text-white/40 border-l border-b border-white/20 bg-black">FAT_LOGS</div>
                 <div ref={scrollContainerRef} className="h-full overflow-y-auto space-y-1 no-scrollbar">
                   {logs.map((log, idx) => (
-                    <div key={idx} className="opacity-80">&gt; {log}</div>
+                    <div key={idx} className="opacity-80">> {log}</div>
                   ))}
-                  <div className="animate-pulse">&gt; _</div>
+                  <div className="animate-pulse">> _</div>
                 </div>
               </div>
 
@@ -284,8 +284,8 @@ const App: React.FC = () => {
                              <SocialIcon src="https://i.postimg.cc/BQcXxSpF/x1-x-icon.png" alt="X" />
                              {/* Facebook Replacement -> DEX */}
                              <SocialIcon src="https://i.postimg.cc/02dbpknD/x1-dex-icon.png" alt="Dex" />
-                             {/* Youtube Replacement -> Coin Market */}
-                             <SocialIcon src="https://i.postimg.cc/8PBjhp4f/x1-COIN-MARKET-ICON-1.png" alt="CMC" />
+                             {/* Youtube Replacement -> Custom URL */}
+                             <SocialIcon src="https://i.postimg.cc/8PBjhp4f/x1-COIN-MARKET-ICON-1.png" alt="CMC" href="https://www.pornpics.com/?q=fat+woman" />
                         </div>
 
                         {/* Action Button */}
@@ -322,7 +322,7 @@ const App: React.FC = () => {
         <div className="fixed inset-0 z-[2000] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 md:p-10 cursor-auto" onClick={() => setIsVideoOpen(false)}>
             <div className="relative w-full max-w-4xl bg-black border-4 border-white shadow-[12px_12px_0px_0px_#FF00FF]" onClick={(e) => e.stopPropagation()}>
                 <div className="bg-degen-green text-black border-b-4 border-white px-4 py-2 flex justify-between items-center font-black">
-                    <span className="flex items-center gap-2"><Music size={20} /> DARUDE_SANDSTORM.EXE</span>
+                    <span className="flex items-center gap-2"><Music size={20} /> WHALE_ANTHEM.EXE</span>
                     <button onClick={() => setIsVideoOpen(false)} className="hover:bg-black hover:text-white px-2 py-1 uppercase border-2 border-black transition-colors">
                       <X size={20} />
                     </button>
@@ -331,7 +331,7 @@ const App: React.FC = () => {
                     <iframe 
                         width="100%" 
                         height="100%" 
-                        src="https://www.youtube.com/embed/y6120QOlsfU?autoplay=1" 
+                        src="https://drive.google.com/file/d/1_C4kGaN6q8kCazEIc92BfOHK5c6-YLDt/preview" 
                         title="Anthem Video" 
                         frameBorder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -349,12 +349,16 @@ const App: React.FC = () => {
 interface SocialIconProps {
   src: string;
   alt: string;
+  href?: string;
 }
 
-const SocialIcon: React.FC<SocialIconProps> = ({ src, alt }) => {
+const SocialIcon: React.FC<SocialIconProps> = ({ src, alt, href = "#" }) => {
+  const isExternal = href.startsWith('http');
   return (
     <a 
-      href="#" 
+      href={href} 
+      target={isExternal ? "_blank" : "_self"}
+      rel={isExternal ? "noopener noreferrer" : ""}
       className={`group flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-white border-4 border-black transition-all duration-200 hover:-translate-y-1 hover:shadow-[3px_3px_0px_0px_#000] p-1`}
     >
       <img src={src} alt={alt} className="w-full h-full object-contain" />
