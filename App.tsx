@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Music, Terminal, Cpu, Zap, X, Gamepad2 } from 'lucide-react';
+import { Music, Terminal, Cpu, Zap, X } from 'lucide-react';
 import ChaosBackground from './components/ChaosBackground';
-import CSuiteSurgeGame from './components/CSuiteSurgeGame';
 
 const LOADING_TEXTS = [
   "Initializing cheeseburger...",
@@ -26,7 +25,6 @@ const App: React.FC = () => {
   const [isExploding, setIsExploding] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [isGameOpen, setIsGameOpen] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const cursorRef = useRef<HTMLImageElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -225,7 +223,7 @@ const App: React.FC = () => {
                     </h1>
                      <div className="w-full bg-white/80 backdrop-blur-sm border-4 border-black p-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,0.2)] flex flex-col xl:flex-row gap-4 items-center justify-between">
                         <div className="flex gap-2">
-                             <SocialIcon src="https://i.postimg.cc/BQcXxSpF/x1-x-icon.png" alt="X" />
+                             <SocialIcon src="https://i.postimg.cc/BQcXxSpF/x1-x-icon.png" alt="X" href="https://x.com/i/communities/2011185640856256925" />
                              <SocialIcon src="https://i.postimg.cc/02dbpknD/x1-dex-icon.png" alt="Dex" />
                              <SocialIcon src="https://i.postimg.cc/8PBjhp4f/x1-COIN-MARKET-ICON-1.png" alt="CMC" href="https://www.pornpics.com/?q=fat+woman" />
                         </div>
@@ -248,16 +246,6 @@ const App: React.FC = () => {
         <div className="bg-degen-yellow border-4 border-black p-2 rotate-[-12deg] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-bounce hidden md:block">
           <span className="font-black text-xl uppercase">BUY NOW</span>
         </div>
-        <button 
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsGameOpen(true);
-          }}
-          className="bg-purple-600 hover:bg-purple-500 text-white border-4 border-black p-2 rotate-[-5deg] shadow-[8px_8px_0px_0px_#00FF00] hover:scale-110 transition-transform flex items-center gap-2 group cursor-pointer"
-        >
-          <Gamepad2 size={24} className="group-hover:rotate-180 transition-transform" />
-          <span className="font-black text-xl uppercase">PLAY GAME</span>
-        </button>
       </div>
       
       <a 
@@ -291,10 +279,6 @@ const App: React.FC = () => {
                 </div>
             </div>
         </div>
-      )}
-
-      {isGameOpen && (
-        <CSuiteSurgeGame onClose={() => setIsGameOpen(false)} />
       )}
     </div>
   );
