@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Music, Terminal, Cpu, Zap, X } from 'lucide-react';
+import { Music, Terminal, Cpu, Zap, X, Gamepad2 } from 'lucide-react';
 import ChaosBackground from './components/ChaosBackground';
+import CSuiteSurgeGame from './components/CSuiteSurgeGame';
 
 const LOADING_TEXTS = [
   "Initializing cheeseburger...",
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   const [isExploding, setIsExploding] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isGameOpen, setIsGameOpen] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const cursorRef = useRef<HTMLImageElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -33,7 +35,6 @@ const App: React.FC = () => {
   useEffect(() => {
     const updateCursor = (e: MouseEvent) => {
       if (cursorRef.current) {
-        // Using translate3d for better performance
         cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
       }
     };
@@ -46,7 +47,6 @@ const App: React.FC = () => {
     const totalSteps = LOADING_TEXTS.length;
     let step = 0;
 
-    // Main text interval
     const mainInterval = setInterval(() => {
       step++;
       if (step < totalSteps) {
@@ -55,12 +55,10 @@ const App: React.FC = () => {
         clearInterval(mainInterval);
         startExplosion();
       }
-    }, 1500); // Slightly longer to enjoy the vibe
+    }, 1500);
 
-    // Log generation interval
     const logInterval = setInterval(() => {
       const randomLog = LOG_MESSAGES[Math.floor(Math.random() * LOG_MESSAGES.length)];
-      // Cast options to any to avoid TS error with older lib definitions missing fractionalSecondDigits
       const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false, fractionalSecondDigits: 2 } as any);
       setLogs(prev => [...prev.slice(-6), `[${timestamp}] > ${randomLog}`]);
     }, 400);
@@ -71,7 +69,6 @@ const App: React.FC = () => {
     };
   }, []);
 
-  // Auto-scroll logs
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
@@ -83,32 +80,26 @@ const App: React.FC = () => {
     setTimeout(() => {
       setHasLoaded(true);
       setIsExploding(false);
-    }, 800); // Match CSS animation duration
+    }, 800);
   };
 
   const handlePlayAnthem = () => {
     setIsVideoOpen(true);
-    // Add a visual flash effect on click
     document.body.style.filter = 'invert(1)';
     setTimeout(() => {
       document.body.style.filter = 'invert(0)';
     }, 100);
   };
 
-  // Render Loader
   if (!hasLoaded && !isExploding) {
     return (
       <div className="fixed inset-0 bg-degen-pink z-50 flex items-center justify-center overflow-hidden font-mono select-none cursor-none">
-        
-        {/* Custom Cursor for Loader */}
         <img 
           ref={cursorRef}
           src="https://i.postimg.cc/XY7rjMW4/2.gif" 
           alt="" 
           className="fixed top-0 left-0 w-20 h-20 pointer-events-none z-[9999]" 
         />
-
-        {/* Kinetic Typography Background */}
         <div className="absolute inset-0 flex flex-col justify-center opacity-10 pointer-events-none">
           {Array.from({ length: 12 }).map((_, i) => (
             <div 
@@ -120,15 +111,9 @@ const App: React.FC = () => {
             </div>
           ))}
         </div>
-
-        {/* Pattern Overlay */}
         <div className="absolute inset-0 pattern-grid opacity-20 pointer-events-none"></div>
-
-        {/* Main Brutalist Window */}
         <div className="relative z-10 w-full max-w-2xl mx-4 transform animate-wiggle">
           <div className="bg-black border-4 border-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] md:shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] p-1">
-            
-            {/* Window Header */}
             <div className="bg-white text-black px-4 py-2 font-bold flex justify-between items-center border-b-4 border-black mb-1">
               <span className="flex items-center gap-2"><Terminal size={18} /> WHALE_ACCESS_GRANTED</span>
               <div className="flex gap-2">
@@ -137,11 +122,7 @@ const App: React.FC = () => {
                 <div className="w-4 h-4 bg-black border border-white"></div>
               </div>
             </div>
-
-            {/* Window Body */}
             <div className="p-6 md:p-10 flex flex-col gap-8">
-              
-              {/* Main Text Area */}
               <div className="text-center">
                 <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-2 leading-none">
                   {LOADING_TEXTS[loadingIndex]}
@@ -152,8 +133,6 @@ const App: React.FC = () => {
                   </p>
                 )}
               </div>
-
-              {/* Progress Bar */}
               <div className="space-y-2">
                 <div className="flex justify-between text-xs text-degen-green uppercase font-bold">
                   <span>Progress</span>
@@ -164,24 +143,19 @@ const App: React.FC = () => {
                     className="h-full bg-degen-green absolute top-0 left-0 border-r-4 border-black transition-all duration-300 ease-out"
                     style={{ width: `${((loadingIndex + 1) / LOADING_TEXTS.length) * 100}%` }}
                   >
-                    {/* Stripes inside bar */}
                     <div className="w-full h-full opacity-30 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#000_10px,#000_20px)]"></div>
                   </div>
                 </div>
               </div>
-
-              {/* Terminal Logs */}
               <div className="border-2 border-white/20 bg-white/5 p-4 h-32 overflow-hidden relative font-mono text-xs md:text-sm text-cyan-400">
                 <div className="absolute top-0 right-0 p-1 text-[10px] text-white/40 border-l border-b border-white/20 bg-black">FAT_LOGS</div>
                 <div ref={scrollContainerRef} className="h-full overflow-y-auto space-y-1 no-scrollbar">
                   {logs.map((log, idx) => (
-                    <div key={idx} className="opacity-80">> {log}</div>
+                    <div key={idx} className="opacity-80">{">"} {log}</div>
                   ))}
-                  <div className="animate-pulse">> _</div>
+                  <div className="animate-pulse">{">"} _</div>
                 </div>
               </div>
-
-              {/* Footer Metadata */}
               <div className="flex justify-between items-center text-[10px] text-white/50 border-t border-white/10 pt-4 uppercase">
                 <div className="flex items-center gap-2">
                   <Cpu size={14} />
@@ -192,7 +166,6 @@ const App: React.FC = () => {
                   <span>VOLTAGE: FAT</span>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -202,32 +175,20 @@ const App: React.FC = () => {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden font-sans cursor-none">
-      
-      {/* Custom Cursor for Main App */}
       <img 
         ref={cursorRef}
         src="https://i.postimg.cc/XY7rjMW4/2.gif" 
         alt="" 
         className="fixed top-0 left-0 w-20 h-20 pointer-events-none z-[9999]" 
       />
-
-      {/* Explosion Overlay Transition */}
       {isExploding && (
         <div className="fixed inset-0 z-[1000] bg-white flex items-center justify-center animate-explode pointer-events-none">
            <img src="https://i.postimg.cc/XY7rjMW4/2.gif" alt="BOOM" className="w-96 h-96 object-contain" />
         </div>
       )}
-
-      {/* The Chaos Layer */}
       <ChaosBackground />
-
-      {/* Main Content Layer */}
       <div className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
-        
-        {/* The White Whale Container (REDUCED SIZE) */}
         <div className="pointer-events-auto relative bg-white border-4 md:border-6 border-black shadow-[8px_8px_0px_0px_#000] md:shadow-[16px_16px_0px_0px_#000] flex flex-col max-w-4xl mx-auto transform transition-transform duration-200 hover:rotate-1 hover:scale-[1.01]">
-            
-            {/* Decorative Window Header */}
             <div className="bg-black text-white px-3 py-1.5 font-mono text-xs flex justify-between items-center select-none border-b-4 border-black">
                 <span className="tracking-widest">THE_WHITE_WHALE.EXE</span>
                 <div className="flex gap-1.5">
@@ -236,32 +197,20 @@ const App: React.FC = () => {
                     <div className="w-2.5 h-2.5 bg-degen-pink rounded-full border border-white/50"></div>
                 </div>
             </div>
-
-            {/* Main Content Body - Funky Background Pattern */}
             <div className="relative p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 overflow-hidden">
-                {/* Subtle Grid Background inside the card */}
                 <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,#fff,#fff_10px,#f5f5f5_10px,#f5f5f5_20px)] z-0 animate-moving-stripes"></div>
-
-                {/* Massive Image Section (REDUCED SIZE) */}
                 <div className="relative group z-10 shrink-0">
-                    {/* Chaotic offset backgrounds */}
                     <div className="absolute inset-0 bg-degen-green translate-x-3 translate-y-3 border-4 border-black group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-300"></div>
                     <div className="absolute inset-0 bg-degen-pink -translate-x-2 -translate-y-2 border-4 border-black mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    {/* The Image */}
                     <img 
                         src="https://i.postimg.cc/1zMtbJ2F/LOGO-MAIN.jpg" 
                         alt="The Whale" 
                         className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[280px] lg:h-[280px] object-cover border-4 md:border-8 border-black grayscale contrast-125 group-hover:grayscale-0 group-hover:rotate-2 transition-all duration-300 z-10 bg-white"
                     />
-                    
-                    {/* Decorative Badge */}
                     <div className="absolute -top-4 -left-4 z-20 bg-degen-yellow text-black font-black text-xs md:text-sm px-3 py-1 border-4 border-black -rotate-12 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:scale-110 transition-transform">
                         100% WHALE
                     </div>
                 </div>
-
-                {/* Text and Actions Side */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left z-10 flex-1 min-w-0">
                     <h1 className="font-black leading-[0.8] tracking-tighter uppercase select-none flex flex-col items-center md:items-start mb-6 w-full">
                         <span className="text-3xl md:text-5xl bg-black text-white px-2 py-1 mb-2 rotate-[-3deg] inline-block shadow-[4px_4px_0px_0px_#FF00FF]">
@@ -274,21 +223,12 @@ const App: React.FC = () => {
                           WHALE
                         </span>
                     </h1>
-
-                     {/* Interactive Footer Section */}
                      <div className="w-full bg-white/80 backdrop-blur-sm border-4 border-black p-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,0.2)] flex flex-col xl:flex-row gap-4 items-center justify-between">
-                        
-                        {/* Social Icons */}
                         <div className="flex gap-2">
-                             {/* Twitter Replacement -> X */}
                              <SocialIcon src="https://i.postimg.cc/BQcXxSpF/x1-x-icon.png" alt="X" />
-                             {/* Facebook Replacement -> DEX */}
                              <SocialIcon src="https://i.postimg.cc/02dbpknD/x1-dex-icon.png" alt="Dex" />
-                             {/* Youtube Replacement -> Custom URL */}
                              <SocialIcon src="https://i.postimg.cc/8PBjhp4f/x1-COIN-MARKET-ICON-1.png" alt="CMC" href="https://www.pornpics.com/?q=fat+woman" />
                         </div>
-
-                        {/* Action Button */}
                         <button 
                           onClick={handlePlayAnthem}
                           className="w-full xl:w-auto group relative inline-flex items-center justify-center px-3 py-2 text-base md:text-lg font-black text-black bg-degen-green border-4 border-black hover:bg-black hover:text-white transition-all duration-200 shadow-[3px_3px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#FF00FF] hover:-translate-y-1 active:translate-y-1 active:shadow-none whitespace-nowrap"
@@ -303,9 +243,21 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* Floating decorative elements to enhance depth */}
-      <div className="absolute top-10 left-10 z-40 bg-degen-yellow border-4 border-black p-2 rotate-[-12deg] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-bounce hidden md:block">
-        <span className="font-black text-xl uppercase">BUY NOW</span>
+      {/* Floating Elements */}
+      <div className="absolute top-10 left-10 z-[60] flex flex-col gap-4 pointer-events-auto">
+        <div className="bg-degen-yellow border-4 border-black p-2 rotate-[-12deg] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-bounce hidden md:block">
+          <span className="font-black text-xl uppercase">BUY NOW</span>
+        </div>
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsGameOpen(true);
+          }}
+          className="bg-purple-600 hover:bg-purple-500 text-white border-4 border-black p-2 rotate-[-5deg] shadow-[8px_8px_0px_0px_#00FF00] hover:scale-110 transition-transform flex items-center gap-2 group cursor-pointer"
+        >
+          <Gamepad2 size={24} className="group-hover:rotate-180 transition-transform" />
+          <span className="font-black text-xl uppercase">PLAY GAME</span>
+        </button>
       </div>
       
       <a 
@@ -317,7 +269,6 @@ const App: React.FC = () => {
         <span className="font-mono text-lg font-bold">MEMES 🍔</span>
       </a>
 
-      {/* Video Popup Modal */}
       {isVideoOpen && (
         <div className="fixed inset-0 z-[2000] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 md:p-10 cursor-auto" onClick={() => setIsVideoOpen(false)}>
             <div className="relative w-full max-w-4xl bg-black border-4 border-white shadow-[12px_12px_0px_0px_#FF00FF]" onClick={(e) => e.stopPropagation()}>
@@ -342,6 +293,9 @@ const App: React.FC = () => {
         </div>
       )}
 
+      {isGameOpen && (
+        <CSuiteSurgeGame onClose={() => setIsGameOpen(false)} />
+      )}
     </div>
   );
 };
