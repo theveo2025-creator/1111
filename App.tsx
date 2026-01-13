@@ -175,9 +175,9 @@ const App: React.FC = () => {
                 <div className="absolute top-0 right-0 p-1 text-[10px] text-white/40 border-l border-b border-white/20 bg-black">FAT_LOGS</div>
                 <div ref={scrollContainerRef} className="h-full overflow-y-auto space-y-1 no-scrollbar">
                   {logs.map((log, idx) => (
-                    <div key={idx} className="opacity-80">> {log}</div>
+                    <div key={idx} className="opacity-80">&gt; {log}</div>
                   ))}
-                  <div className="animate-pulse">> _</div>
+                  <div className="animate-pulse">&gt; _</div>
                 </div>
               </div>
 
