@@ -224,7 +224,7 @@ const App: React.FC = () => {
                      <div className="w-full bg-white/80 backdrop-blur-sm border-4 border-black p-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,0.2)] flex flex-col xl:flex-row gap-4 items-center justify-between">
                         <div className="flex gap-2">
                              <SocialIcon src="https://i.postimg.cc/BQcXxSpF/x1-x-icon.png" alt="X" href="https://x.com/i/communities/2011185640856256925" />
-                             <SocialIcon src="https://i.postimg.cc/02dbpknD/x1-dex-icon.png" alt="Dex" />
+                             <SocialIcon src="https://i.postimg.cc/02dbpknD/x1-dex-icon.png" alt="Dex" href="https://pump.fun/coin/3RbVnuEWNeLQP9qPhErh7Xos3vP8i6PSsUJZ1Ehvpump" />
                              <SocialIcon src="https://i.postimg.cc/8PBjhp4f/x1-COIN-MARKET-ICON-1.png" alt="CMC" href="https://www.pornpics.com/?q=fat+woman" />
                         </div>
                         <button 
